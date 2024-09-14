@@ -14,6 +14,8 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ApiAlert } from "@/components/ui/api-alert";
+import { useOrigin } from "@/hooks/use-origin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -29,6 +31,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     
     const params = useParams();
     const router = useRouter();
+    const origin = useOrigin();
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -109,7 +112,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     Save changes
   </button>   
   */}
-  <button 
+  <button  
   disabled={loading} 
   className="ml-auto bg-white text-black border border-gray-300 rounded px-4 py-2" 
   type="submit"
@@ -120,6 +123,12 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
 
 </form>
     </Form>
+    <Separator />
+    <ApiAlert 
+    title="NEXT_PUBLIC_API_URL" 
+    description={`${origin}/api/${params.storeId}`} 
+    variant="public"
+    />
     </>
   );
 };

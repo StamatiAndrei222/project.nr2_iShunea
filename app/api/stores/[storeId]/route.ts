@@ -68,7 +68,12 @@ export async function DELETE(
           },
          
         });
-        
+      
+      
+        if (store.count === 0) {
+          return new NextResponse('No store found or you do not have permission to delete it', { status: 404 });
+        }
+
       return NextResponse.json(store);
   
     } catch (error) {
