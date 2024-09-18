@@ -23,8 +23,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
+
+
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -44,7 +44,7 @@ interface BillboardFormProps {
     
     const params = useParams();
     const router = useRouter();
-    const origin = useOrigin();
+ 
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -71,6 +71,7 @@ interface BillboardFormProps {
             await axios.post(`/api/${params.storeId}/billboards`, data);
           } 
           router.refresh();
+          router.push(`/${params.storeId}/billboards`)
           toast.success(toastMessage);
         } catch (error) {
           toast.error("Something went wrong.");
@@ -84,7 +85,7 @@ interface BillboardFormProps {
           setLoading(true)
           await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
           router.refresh();
-          router.push("/")
+          router.push(`/${params.storeId}/billboards`);
           toast.success("Billboard deleted.");
         } catch (error) {
           toast.error("Make sure you removed all categories using this billboard first.");
@@ -172,7 +173,7 @@ interface BillboardFormProps {
 
 </form>
     </Form>
-    <Separator />
+   
 
     </>
   );
